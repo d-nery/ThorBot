@@ -1,15 +1,17 @@
-export const run = async (client, msg, args) => {};
+export const run = async (client, msg, args) => {
+  msg.channel.send("Not implemmented");
+};
 
 export const conf = {
-  enabled: true,
-  guildOnly: false,
+  enabled: false,
+  guildOnly: true,
   aliases: [],
-  permLevel: "User",
+  permLevel: "User"
 };
 
 export const help = {
   name: "dst",
   category: "X",
   description: "Controle pro servidor de Don't Starve Together.",
-  usage: "dst [...]",
+  usage: "dst [...]"
 };

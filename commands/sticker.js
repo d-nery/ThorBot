@@ -16,12 +16,12 @@ export const conf = {
   enabled: true,
   guildOnly: false,
   aliases: ["st"],
-  permLevel: "User",
+  permLevel: "User"
 };
 
 export const help = {
   name: "sticker",
   category: "X",
   description: "Manda um sticker aleatório de alguém, por enquanto só do renzo rs.",
-  usage: "sticker <name>",
+  usage: "sticker <name>"
 };

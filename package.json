@@ -3,9 +3,11 @@
     "start": "node -r esm bot.js"
   },
   "dependencies": {
+    "chalk": "^3.0.0",
     "discord.js": "^12.0.2",
     "enmap": "^5.2.4",
-    "fs": "^0.0.1-security"
+    "fs": "^0.0.1-security",
+    "moment": "^2.24.0"
   },
   "devDependencies": {
     "esm": "^3.2.25"

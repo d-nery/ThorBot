@@ -21,9 +21,9 @@ export const run = async (client, msg, args) => {
         output += `\u200b\n== ${cat} ==\n`;
         currentCategory = cat;
       }
-      output += `${client.config.prefix}${c.help.name}${" ".repeat(longest - c.help.name.length)} :: ${
-        c.help.description
-      }\n`;
+      output += `${client.config.prefix}${c.help.name}${" ".repeat(
+        longest - c.help.name.length
+      )} :: ${c.help.description}\n`;
     });
 
     msg.channel.send(output, { code: "asciidoc", split: { char: "\u200b" } });
@@ -45,12 +45,12 @@ export const conf = {
   enabled: true,
   guildOnly: false,
   aliases: ["h"],
-  permLevel: "User",
+  permLevel: "User"
 };
 
 export const help = {
   name: "help",
   category: "X",
   description: "Mostra essa ajuda ou a de um comando específico.",
-  usage: "help",
+  usage: "help"
 };

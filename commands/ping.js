@@ -7,12 +7,12 @@ export const conf = {
   enabled: true,
   guildOnly: false,
   aliases: [],
-  permLevel: "User",
+  permLevel: "User"
 };
 
 export const help = {
   name: "ping",
   category: "X",
   description: "Vê a latência.",
-  usage: "ping",
+  usage: "ping"
 };
