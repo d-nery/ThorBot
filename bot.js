@@ -18,7 +18,7 @@ require("./helpers/client_functions").default(client);
 (async () => {
   const cmdFiles = await readdir("./commands/");
   client.logger.log(`Loading a total of ${cmdFiles.length} commands.`);
-  cmdFiles.forEach(file => {
+  cmdFiles.forEach(async file => {
     if (!file.endsWith(".js")) {
       return;
     }
@@ -43,7 +43,7 @@ require("./helpers/client_functions").default(client);
   const evtFiles = await readdir("./events/");
   client.logger.log(`Loading a total of ${evtFiles.length} events.`);
 
-  evtFiles.forEach(file => {
+  evtFiles.forEach(async file => {
     let eventName = file.split(".")[0];
     client.logger.log(`Loading Event: ${eventName}`);
     const event = require(`./events/${file}`).default;

@@ -6,12 +6,12 @@ export const conf = {
   enabled: false,
   guildOnly: true,
   aliases: [],
-  permLevel: "User"
+  permLevel: "User",
 };
 
 export const help = {
   name: "dst",
-  category: "X",
+  category: "Jogos",
   description: "Controle pro servidor de Don't Starve Together.",
-  usage: "dst [...]"
+  usage: "dst [...]",
 };
