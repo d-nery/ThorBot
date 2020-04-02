@@ -1,10 +1,10 @@
 import { MessageAttachment } from "discord.js";
 
-const stickers = {
-  renzo: 10,
-  schneider: 8,
-  schin: "schneider",
-};
+const stickers = new Map([
+  ["renzo", 10],
+  ["schneider", 8],
+  ["schin", "schneider"],
+]);
 
 const baseURL = "https://static.thunderatz.org/thunderbot/";
 
@@ -15,16 +15,16 @@ export const run = async (client, msg, args) => {
 
   let person = args[0];
 
-  if (!stickers.hasOwnProperty(person)) {
+  if (!stickers.has(person)) {
     return;
   }
 
-  if (typeof stickers[person] == "string") {
-    person = stickers[person];
+  if (typeof stickers.get(person) == "string") {
+    person = stickers.get(person);
   }
 
   const attachment = new MessageAttachment(
-    `${baseURL}/${person}/${person}${Math.floor(Math.random() * (stickers[person] - 1)) + 1}.png`
+    `${baseURL}/${person}/${person}${Math.floor(Math.random() * (stickers.get(person) - 1)) + 1}.png`
   );
 
   msg.channel.send(attachment);
