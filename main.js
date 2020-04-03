@@ -25,7 +25,7 @@ const thor = new Thor(config);
   evtFiles.forEach(async file => {
     let eventName = file.split(".")[0];
     thor.logger.info(`Loading Event: ${eventName}`);
-    const event = require(`./events/${file}`).default;
+    const event = (await import(`./events/${file}`)).default;
     thor.on(eventName, event.bind(null, thor));
   });
 

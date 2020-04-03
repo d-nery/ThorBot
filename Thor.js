@@ -68,7 +68,7 @@ export default class Thor extends Client {
   loadCommand = async cmdName => {
     try {
       this.logger.debug(`Loading Command: ${cmdName}`);
-      const props = require(`./commands/${cmdName}`);
+      const props = await import(`./commands/${cmdName}`);
 
       if (props.init) {
         props.init(this);
