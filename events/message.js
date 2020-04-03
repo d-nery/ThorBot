@@ -8,7 +8,11 @@ export default async (client, msg) => {
     .trim()
     .split(/ +/g);
   const command = args.shift().toLowerCase();
-  const cmd = client.commands.get(command) || client.commands.get(client.aliases.get(command));
+  const cmd =
+    (await client.commands.get(command)) ||
+    (await client.commands.get(client.aliases.get(command)));
+
+  console.log(cmd);
 
   if (!cmd) {
     return;

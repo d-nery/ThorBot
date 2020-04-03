@@ -1,7 +1,7 @@
-import { Client } from "discord.js";
+import { Client, Collection } from "discord.js";
 import { promisify } from "util";
 import fs from "fs";
-import Enmap from "enmap";
+import Keyv from "keyv";
 import Logger from "./helpers/Logger";
 
 import config from "./config.json";
@@ -11,8 +11,11 @@ const client = new Client();
 
 client.config = config;
 client.logger = new Logger();
-client.commands = new Enmap();
-client.aliases = new Enmap();
+client.commands = new Collection();
+client.aliases = new Collection();
+
+client.settings = new Keyv("sqlite://data/settings.sqlite");
+
 require("./helpers/client_functions").default(client);
 
 (async () => {
