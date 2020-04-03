@@ -1,57 +1,54 @@
-import { Client, Collection } from "discord.js";
 import { promisify } from "util";
 import fs from "fs";
-import Keyv from "keyv";
-import Logger from "./helpers/Logger";
 
-import config from "./config.json";
+import config from "./config.js";
+import Thor from "./Thor";
 
 const readdir = promisify(fs.readdir);
-const client = new Client();
-
-client.config = config;
-client.logger = new Logger();
-client.commands = new Collection();
-client.aliases = new Collection();
-
-client.settings = new Keyv("sqlite://data/settings.sqlite");
-
-require("./helpers/client_functions").default(client);
+const thor = new Thor(config);
 
 (async () => {
   const cmdFiles = await readdir("./commands/");
-  client.logger.log(`Loading a total of ${cmdFiles.length} commands.`);
+  thor.logger.info(`Loading a total of ${cmdFiles.length} commands.`);
+
   cmdFiles.forEach(async file => {
     if (!file.endsWith(".js")) {
       return;
     }
 
-    try {
-      client.logger.log(`Loading command ${file}`);
-      const props = require(`./commands/${file}`);
-
-      if (props.init) {
-        props.init(client);
-      }
-
-      client.commands.set(props.help.name, props);
-      props.conf.aliases.forEach(alias => {
-        client.aliases.set(alias, props.help.name);
-      });
-    } catch (e) {
-      client.logger.log(`Unable to load command ${props.help.name}: ${e}`);
-    }
+    thor.loadCommand(file);
   });
 
   const evtFiles = await readdir("./events/");
-  client.logger.log(`Loading a total of ${evtFiles.length} events.`);
+  thor.logger.info(`Loading a total of ${evtFiles.length} events.`);
 
   evtFiles.forEach(async file => {
     let eventName = file.split(".")[0];
-    client.logger.log(`Loading Event: ${eventName}`);
+    thor.logger.info(`Loading Event: ${eventName}`);
     const event = require(`./events/${file}`).default;
-    client.on(eventName, event.bind(null, client));
+    thor.on(eventName, event.bind(null, thor));
   });
 
-  client.login(client.config.token);
+  thor.login(thor.config.token);
 })();
+
+process.on("uncaughtException", err => {
+  const errorMsg = err.stack.replace(new RegExp(`${__dirname}/`, "g"), "./");
+  thor.logger.error(`Uncaught Exception: ${errorMsg}`);
+  console.error(err);
+  thor.destroy();
+
+  process.exit(1);
+});
+
+process.on("unhandledRejection", err => {
+  thor.logger.error(`Unhandled rejection: ${err}`);
+  console.error(err);
+});
+
+process.on("SIGINT", () => {
+  console.log("Captured SIGINT, exiting...");
+  thor.destroy();
+
+  process.exit();
+});

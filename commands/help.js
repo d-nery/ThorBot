@@ -3,8 +3,13 @@ import { MessageEmbed } from "discord.js";
 export const run = async (client, msg, args) => {
   if (!args[0]) {
     const myCommands = msg.guild
-      ? client.commands.filter(cmd => cmd.conf.enabled)
-      : client.commands.filter(cmd => cmd.conf.enabled && cmd.conf.guildOnly !== true);
+      ? client.commands.filter(cmd => cmd.conf.enabled && client.levelCache[cmd.conf.permLevel] <= msg.author.permLevel)
+      : client.commands.filter(
+          cmd =>
+            cmd.conf.enabled &&
+            cmd.conf.guildOnly !== true &&
+            client.levelCache[cmd.conf.permLevel] <= msg.author.permLevel
+        );
 
     const commandNames = myCommands.keyArray();
     const longest = commandNames.reduce((long, str) => Math.max(long, str.length), 0);

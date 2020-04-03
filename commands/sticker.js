@@ -8,7 +8,7 @@ const stickers = new Map([
 
 const baseURL = "https://static.thunderatz.org/thunderbot/";
 
-export const run = async (client, msg, args) => {
+export const run = async (client, msg, args, level) => {
   if (!args[0]) {
     return;
   }
