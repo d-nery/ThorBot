@@ -4,8 +4,6 @@ import fs from "fs";
 import Keyv from "keyv";
 import winston from "winston";
 
-const readdir = promisify(fs.readdir);
-
 export default class Thor extends Client {
   constructor(config) {
     super();
@@ -13,7 +11,10 @@ export default class Thor extends Client {
 
     this.logger = winston.createLogger({
       transports: [new winston.transports.Console()],
-      format: winston.format.combine(winston.format.colorize({ all: true }), winston.format.simple()),
+      format: winston.format.combine(
+        winston.format.colorize({ all: true }),
+        winston.format.simple()
+      ),
       level: "debug",
     });
 
@@ -29,7 +30,7 @@ export default class Thor extends Client {
     }
   }
 
-  permlevel = async msg => {
+  permlevel = async (msg) => {
     let permlvl = 0;
 
     const permOrder = this.config.permLevels.slice(0).sort((p, c) => (p.level < c.level ? 1 : -1));
@@ -49,7 +50,7 @@ export default class Thor extends Client {
     return permlvl;
   };
 
-  getSettings = async guild => {
+  getSettings = async (guild) => {
     let defaultConf = await this.settings.get("default");
 
     if (!defaultConf) {
@@ -65,7 +66,7 @@ export default class Thor extends Client {
     return { ...defaultConf, ...guildConf };
   };
 
-  loadCommand = async cmdName => {
+  loadCommand = async (cmdName) => {
     try {
       this.logger.debug(`Loading Command: ${cmdName}`);
       const props = await import(`./commands/${cmdName}`);
@@ -75,7 +76,7 @@ export default class Thor extends Client {
       }
 
       this.commands.set(props.help.name, props);
-      props.conf.aliases.forEach(alias => {
+      props.conf.aliases.forEach((alias) => {
         this.aliases.set(alias, props.help.name);
       });
       return false;
@@ -84,7 +85,7 @@ export default class Thor extends Client {
     }
   };
 
-  unloadCommand = async cmdName => {
+  unloadCommand = async (cmdName) => {
     let command;
 
     if (this.commands.has(cmdName)) {
