@@ -14,10 +14,7 @@ export default async (client, msg) => {
     return;
   }
 
-  const args = msg.content
-    .slice(settings.prefix.length)
-    .trim()
-    .split(/ +/g);
+  const args = msg.content.slice(settings.prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
 
   if (msg.guild && !msg.member) {
@@ -34,13 +31,15 @@ export default async (client, msg) => {
   }
 
   if (!msg.guild && cmd.conf.guildOnly) {
-    return msg.channel.send("Esse comando não está disponível em mensagens privadas. Use-o numa guilda.");
+    return msg.channel.send(
+      "Esse comando não está disponível em mensagens privadas. Use-o numa guilda."
+    );
   }
 
   if (level < client.levelCache[cmd.conf.permLevel]) {
     if (settings.systemNotice === "true") {
       return msg.channel.send(`Você não tem permissão para usar esse comando.
-Seu nível de permissão é ${level} (${client.config.permLevels.find(l => l.level === level).name})
+Seu nível de permissão é ${level} (${client.config.permLevels.find((l) => l.level === level).name})
 Esse comando precisa de nível ${client.levelCache[cmd.conf.permLevel]} (${cmd.conf.permLevel})`);
     } else {
       return;
@@ -49,10 +48,12 @@ Esse comando precisa de nível ${client.levelCache[cmd.conf.permLevel]} (${cmd.c
 
   msg.author.permLevel = level;
   client.logger.debug(
-    `[CMD] ${client.config.permLevels.find(l => l.level === level).name} ${msg.author.username} (${
-      msg.author.id
-    }) ran command ${cmd.help.name}`
+    `[CMD] ${client.config.permLevels.find((l) => l.level === level).name} ${
+      msg.author.username
+    } (${msg.author.id}) ran command ${cmd.help.name}`
   );
 
-  cmd.run(client, msg, args);
+  msg.channel.startTyping();
+  await cmd.run(client, msg, args);
+  msg.channel.stopTyping();
 };

@@ -1,5 +1,5 @@
 {
-  "name": "thunderbot",
+  "name": "thor-bot",
   "description": "ThundeRatz Discord bot.",
   "main": "main.js",
   "author": "Daniel Nery <daniel.nery@thunderatz.org>",

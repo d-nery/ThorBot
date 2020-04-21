@@ -1,5 +1,6 @@
 export const run = async (client, msg, args) => {
-  msg.channel.send(["Cara!", "Coroa!"][Math.round(Math.random())]);
+  let n = Math.random();
+  msg.channel.send(n < 0.001 ? "Eita, caiu em pé!" : n < 0.5005 ? "Cara!" : "Coroa!");
 };
 
 export const conf = {
