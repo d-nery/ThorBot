@@ -6,13 +6,12 @@ const stickers = new Map([
   ["schin", "schneider"],
 ]);
 
-const baseURL = "https://static.thunderatz.org/thunderbot/";
-
 export const run = async (client, msg, args) => {
   if (!args[0]) {
     return;
   }
 
+  const baseURL = client.config.thunder.sticker.baseURL;
   let person = args[0];
 
   if (!stickers.has(person)) {
@@ -24,7 +23,9 @@ export const run = async (client, msg, args) => {
   }
 
   const attachment = new MessageAttachment(
-    `${baseURL}/${person}/${person}${Math.floor(Math.random() * (stickers.get(person) - 1)) + 1}.png`
+    `${baseURL}/${person}/${person}${
+      Math.floor(Math.random() * (stickers.get(person) - 1)) + 1
+    }.png`
   );
 
   msg.channel.send(attachment);

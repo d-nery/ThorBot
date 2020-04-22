@@ -1,7 +1,7 @@
 export const run = async (client, msg, args) => {
   msg.channel.send(`**ThunderServidor de Minecraft**
-Endereço:  \`35.198.60.125:25565\`
-Seed: \`[4230481854676846495]\``);
+Endereço:  \`${client.config.thunder.mine.addr}\`
+Seed: \`[${client.config.thunder.mine.seed}]\``);
 };
 
 export const conf = {
