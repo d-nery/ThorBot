@@ -1,5 +1,6 @@
 {
   "name": "thor-bot",
+  "version": "1.0.0",
   "description": "ThundeRatz Discord bot.",
   "main": "main.js",
   "author": "Daniel Nery <daniel.nery@thunderatz.org>",
