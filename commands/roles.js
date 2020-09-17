@@ -6,6 +6,7 @@ const roles = new Map([
   ["lol", "LoLzero"],
   ["dontstarve", "Esfomeado"],
   ["gartic", "Gartiqueiro"],
+  ["amongus", "Espaçonauta"],
 ]);
 
 export const run = async (client, msg, args) => {
@@ -18,7 +19,7 @@ export const run = async (client, msg, args) => {
     action = "remove";
   }
 
-  let reacts = [...roles.keys()].map(v => client.emojis.cache.find(em => em.name === v).id);
+  let reacts = [...roles.keys()].map((v) => client.emojis.cache.find((em) => em.name === v).id);
   let output = `**Reaja abaixo para ${action === "add" ? "adicionar" : "remover"} algum dos cargos de jogo**`;
 
   const reply = await msg.channel.send(output);
@@ -31,8 +32,8 @@ export const run = async (client, msg, args) => {
     time: 15000,
   });
 
-  collector.on("collect", r => {
-    let role = msg.guild.roles.cache.find(role => role.name === roles.get(r.emoji.name));
+  collector.on("collect", (r) => {
+    let role = msg.guild.roles.cache.find((role) => role.name === roles.get(r.emoji.name));
 
     if (action === "remove" && msg.member.roles.cache.has(role.id)) {
       msg.member.roles.remove(role);
