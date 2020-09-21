@@ -5,7 +5,7 @@ const roles = new Map([
   ["mine", "Minecrafter"],
   ["lol", "LoLzero"],
   ["dontstarve", "Esfomeado"],
-  ["gartic", "Gartiqueiro"],
+  ["gartic", "GarticMod"],
   ["amongus", "Espaçonauta"],
 ]);
 
