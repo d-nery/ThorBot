@@ -1,6 +1,4 @@
 import { Client, Collection } from "discord.js";
-import { promisify } from "util";
-import fs from "fs";
 import Keyv from "keyv";
 import winston from "winston";
 
@@ -11,10 +9,7 @@ export default class Thor extends Client {
 
     this.logger = winston.createLogger({
       transports: [new winston.transports.Console()],
-      format: winston.format.combine(
-        winston.format.colorize({ all: true }),
-        winston.format.simple()
-      ),
+      format: winston.format.combine(winston.format.colorize({ all: true }), winston.format.simple()),
       level: "debug",
     });
 
