@@ -7,6 +7,8 @@ const roles = new Map([
   ["dontstarve", "Esfomeado"],
   ["gartic", "GarticMod"],
   ["amongus", "Espaçonauta"],
+  ["valorant", "Valoranter"],
+  ["fallguys", "Olimpíadas do Faustão"],
 ]);
 
 export const run = async (client, msg, args) => {
